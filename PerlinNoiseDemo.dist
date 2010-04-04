@@ -6,8 +6,8 @@ darcs / http://openengine.dk/code/openengine
 darcs-dev / fh.daimi.au.dk:/users/cgd/code/openengine
 
 # project repository
-darcs /projects/DeConv http://openengine.dk/code/projects/PerlinNoiseDemo
-darcs-dev /projects/DeConv fh.daimi.au.dk:/users/cgd/code/projects/PerlinNoiseDemo
+darcs /projects/PerlinNoiseDemo http://openengine.dk/code/projects/PerlinNoiseDemo
+darcs-dev /projects/PerlinNoiseDemo fh.daimi.au.dk:/users/cgd/code/projects/PerlinNoiseDemo
 
 # required extensions
 darcs /extensions/TexUtils      http://openengine.dk/code/extensions/TexUtils
