@@ -56,7 +56,7 @@ static void Save(FloatTexture2DPtr tex, std::string filename) {
     }
 
     TextureTool::DumpTexture(output,filename +".png");
-    TextureTool::DumpTexture(floattex,filename +".exr");
+    //TextureTool::DumpTexture(floattex,filename +".exr");
 }
 
 void Threshold(FloatTexture2DPtr tex, REAL threshold) {
@@ -102,11 +102,15 @@ int main(int argc, char** argv) {
     //unsigned int smooth = 10,
     //unsigned int layers = 4,
     //unsigned int seed = 0
-    FloatTexture2DPtr output = PerlinNoise::Generate(64, 128, 2, 0.5, 10, 4, 0);
+    //FloatTexture2DPtr output = PerlinNoise::Generate(64, 128, 2, 0.5, 10, 4, 0);
+
+    FloatTexture2DPtr output = PerlinNoise::Generate(32, 16, 128, 2, 0.5, 10, 5, 0);
+
+
     //Threshold(output,80);
     //CloudExpCurve(output);
 
-    //Smooth(output,20);
+    PerlinNoise::Smooth(output,20);
     Save(output, "output");
 
     logger.info << "execution time: " << timer.GetElapsedTime() << logger.end;
