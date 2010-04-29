@@ -4,6 +4,7 @@
 #include <Resources/Tex.h>
 #include <Resources/ResourceManager.h>
 #include <Resources/DirectoryManager.h>
+#include <Resources/Texture3D.h>
 #include <Utils/Timer.h>
 #include <Utils/Convert.h>
 #include <Math/RandomGenerator.h>
@@ -111,8 +112,9 @@ int main(int argc, char** argv) {
     //unsigned int seed = 0
     //FloatTexture2DPtr output = PerlinNoise::Generate(64, 128, 2, 0.5, 10, 4, 0);
 
-    FloatTexture2DPtr output = PerlinNoise::Generate(512, 512, 128, 0.5, 1, 10, 5, 0);
-
+    /*
+    FloatTexture2DPtr output =
+        PerlinNoise::Generate(512, 512, 128, 0.5, 1, 10, 5, 0);
 
     //Threshold(output,80);
     //CloudExpCurve(output);
@@ -121,6 +123,12 @@ int main(int argc, char** argv) {
     PerlinNoise::Normalize(output,0,1); 
     CloudExpCurve(output);
     Save(output, "output");
+    */
+
+    FloatTexture3DPtr output3d = 
+        PerlinNoise::Generate3D(128, 128, 128, 32, 0.5, 1, 10, 5, 0);
+    PerlinNoise::Smooth3D(output3d,20);
+    PerlinNoise::Normalize3D(output3d,0,1); 
 
     logger.info << "execution time: " << timer.GetElapsedTime() << logger.end;
     return EXIT_SUCCESS;
