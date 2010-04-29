@@ -30,7 +30,6 @@ static void Save(FloatTexture2DPtr tex, std::string filename) {
     unsigned int h = tex->GetHeight();
     //unsigned int c = tex->GetChannels();
     UCharTexture2DPtr output(new UCharTexture2D(w,h,1));
-    FloatTexture2DPtr floattex(new FloatTexture2D(w,h,1));
     
     unsigned int k = 0;
     REAL min = numeric_limits<REAL>::max();
@@ -51,12 +50,11 @@ static void Save(FloatTexture2DPtr tex, std::string filename) {
     for (unsigned int x=0; x<w; x++) {
         for (unsigned int y=0; y<h; y++) {
             *(output->GetPixel(x,y)) = ((*(tex->GetPixel(x,y))-min)/max)* 255;
-            *(floattex->GetPixel(x,y)) = ((*(tex->GetPixel(x,y))-min)/max)* numeric_limits<REAL>::max();
         }
     }
 
     TextureTool::DumpTexture(output,filename +".png");
-    //TextureTool::DumpTexture(floattex,filename +".exr");
+    TextureTool::DumpTexture(tex,filename +".exr");
 }
 
 void Threshold(FloatTexture2DPtr tex, REAL threshold) {
@@ -71,17 +69,26 @@ void Threshold(FloatTexture2DPtr tex, REAL threshold) {
 }
 
 void CloudExpCurve(FloatTexture2DPtr tex) {
-    unsigned int CloudCover = 85; // 0-255
-    REAL CloudSharpness = 0.5; //0-1
+    //unsigned int CloudCover = 85; // 0-255 =density
+    //REAL CloudSharpness = 0.5; //0-1 =sharpness
+    REAL CloudCover = 0.215; // 0-255 =density
+    REAL CloudSharpness = 10; //0-1 =sharpness
 
     unsigned int w = tex->GetWidth();
     unsigned int h = tex->GetHeight();
     for (unsigned int x=0; x<w; x++) {
         for (unsigned int y=0; y<h; y++) {
+            /*
             *(tex->GetPixel(x,y)) = *(tex->GetPixel(x,y)) - CloudCover;
             if(*(tex->GetPixel(x,y)) < 0)
                 *(tex->GetPixel(x,y)) = 0;
             *(tex->GetPixel(x,y)) = 255 - (pow(CloudSharpness , *(tex->GetPixel(x,y)) ) * 255);
+*/
+            *(tex->GetPixel(x,y)) = *(tex->GetPixel(x,y)) - CloudCover;
+            *(tex->GetPixel(x,y)) = 
+                1.0 - exp( -CloudSharpness * *(tex->GetPixel(x,y)) );
+            if(*(tex->GetPixel(x,y)) < 0)
+                *(tex->GetPixel(x,y)) = 0;
         }
     }
 }
@@ -104,13 +111,15 @@ int main(int argc, char** argv) {
     //unsigned int seed = 0
     //FloatTexture2DPtr output = PerlinNoise::Generate(64, 128, 2, 0.5, 10, 4, 0);
 
-    FloatTexture2DPtr output = PerlinNoise::Generate(32, 16, 128, 2, 0.5, 10, 5, 0);
+    FloatTexture2DPtr output = PerlinNoise::Generate(512, 512, 128, 0.5, 1, 10, 5, 0);
 
 
     //Threshold(output,80);
     //CloudExpCurve(output);
 
     PerlinNoise::Smooth(output,20);
+    PerlinNoise::Normalize(output,0,1); 
+    CloudExpCurve(output);
     Save(output, "output");
 
     logger.info << "execution time: " << timer.GetElapsedTime() << logger.end;
