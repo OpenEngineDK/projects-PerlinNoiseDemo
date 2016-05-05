@@ -2,16 +2,16 @@
 # http://www.openengine.dk/wiki/Projects/PerlinNoiseDemo
 
 # main repository
-darcs / http://openengine.dk/code/openengine
-darcs-dev / fh.daimi.au.dk:/users/cgd/code/openengine
+git / https://github.com/OpenEngineDK/openengine.git
+git-dev / git@github.com:OpenEngineDK/openengine.git
 
 # project repository
-darcs /projects/PerlinNoiseDemo http://openengine.dk/code/projects/PerlinNoiseDemo
-darcs-dev /projects/PerlinNoiseDemo fh.daimi.au.dk:/users/cgd/code/projects/PerlinNoiseDemo
+git /projects/PerlinNoiseDemo https://github.com/OpenEngineDK/projects-PerlinNoiseDemo.git
+git-dev /projects/PerlinNoiseDemo git@github.com:OpenEngineDK/projects-PerlinNoiseDemo.git
 
 # required extensions
-darcs /extensions/TexUtils      http://openengine.dk/code/extensions/TexUtils
-darcs /extensions/FreeImage     http://openengine.dk/code/extensions/FreeImage
+git /extensions/TexUtils      https://github.com/OpenEngineDK/extensions-TexUtils.git
+git /extensions/FreeImage     https://github.com/OpenEngineDK/extensions-FreeImage.git
 
-darcs-dev /extensions/TexUtils  fh.daimi.au.dk:/users/cgd/code/extensions/TexUtils
-darcs-dev /extensions/FreeImage fh.daimi.au.dk:/users/cgd/code/extensions/FreeImage
+git-dev /extensions/TexUtils  git@github.com:OpenEngineDK/extensions-TexUtils.git
+git-dev /extensions/FreeImage git@github.com:OpenEngineDK/extensions-FreeImage.git
